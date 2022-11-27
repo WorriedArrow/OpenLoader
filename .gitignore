@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# My own build file
+setup.cmd
+
+# e
+e.html
