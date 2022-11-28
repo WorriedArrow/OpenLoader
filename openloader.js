@@ -1,5 +1,5 @@
 /**
- * OpenLoader 0.1.0
+ * OpenLoader 0.1.1
  * Copyright (c) 2022 WorriedArrow.
  *
  * Source: https://github.com/WorriedArrow/OpenLoader/
@@ -70,7 +70,7 @@ setTimeout(() => console.log("%cWelcome to OpenLoader.", "font-size: 5rem; color
 // Add OpenLoader version to the title bar
 if(document.querySelector(".wordmark-2u86JB")) {
 var e = document.createElement('span');
-e.textContent = "| OpenLoader 0.1.0";
+e.textContent = "| OpenLoader 0.1.1";
 document.querySelector(".wordmark-2u86JB").appendChild(e);
 document.querySelector(".wordmark-2u86JB").style.height = "32px";
 document.querySelector(".wordmark-2u86JB").style.display = "flex";
