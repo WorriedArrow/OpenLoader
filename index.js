@@ -40,7 +40,10 @@ terser.minify(readFileSync(join(__dirname, "openloader.js")).toString(), {
     minified = minified.code;
     console.timeEnd("minify");
     data.openasar.js = minified;
-    console.log(data);
     writeFileSync(settingsJson, JSON.stringify(data, undefined, "\t"));
-    console.log("Done! You can now restart your Discord client.\nFully restart it by right clicking it in the system tray and clicking Quit.");
+    console.log("Done! You can now restart your Discord client.\nFully restart it by right clicking it in the system tray and clicking Quit.\n\n\nPress any key to exit the installer...");
+    process.stdin.resume();
+    process.stdin.setEncoding('utf-8');
+    process.stdin.setRawMode(true);
+    process.stdin.on('data', () => process.exit(0));
 });

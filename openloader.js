@@ -363,3 +363,37 @@ function definePlugin(plugin) {
     });
     localStorage.setItem("openloader", JSON.stringify(modified));
 }
+
+/**
+ * The OpenLoader API object.
+ */
+const OpenLoader = {
+    client: new Client()
+}
+
+class Client {
+    /**
+     * Completely relaunches the client.
+     */
+    relaunch() {
+        DiscordNative.remoteApp.relaunch();
+    }
+    /**
+     * Minimizes the window.
+     */
+    minimize() {
+        DiscordNative.window.minimize();
+    }
+    /**
+     * Restores the window, reopening the window if it is closed.
+     */
+    restore() {
+        DiscordNative.window.restore();
+    }
+    /**
+     * Maximizes the window, restoring if it is minimized and reopening the window if it is closed.
+     */
+    maximize() {
+        DiscordNative.window.maximize();
+    }
+}
