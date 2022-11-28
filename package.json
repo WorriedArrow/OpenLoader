@@ -1,0 +1,26 @@
+{
+  "name": "openloader",
+  "version": "0.1.0",
+  "description": "A plugin loader for Discord made possible by OpenAsar.",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "pkg": {
+    "assets": "openloader.js",
+    "targets": [
+      "linux-node14",
+      "win-node14",
+      "mac-node14"
+    ],
+    "outputPath": "dist"
+  },
+  "dependencies": {
+    "terser": "^5.16.0"
+  }
+}
