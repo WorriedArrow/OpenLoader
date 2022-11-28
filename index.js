@@ -1,25 +1,15 @@
-const { readFileSync, writeFileSync } = require("fs");
+const { readFileSync, writeFileSync, existsSync } = require("fs");
 const { homedir, platform } = require("os");
 const { join } = require("path");
 const terser = require("terser");
 
-let channel = "";
+let channel;
 
 if(process.argv.length > 2) {
-    switch (process.argv[2]) {
-        case "stable":
-            channel = "";
-        case "ptb":
-            channel = "ptb";
-        case "canary":
-            channel = "canary";
-        case "dev":
-            channel = "development";
-        case "development":
-            channel = "development";
-        default:
-            channel = "";
-    }
+    if(process.argv[2] == "ptb") channel = "ptb";
+    else if(process.argv[2] == "canary") channel = "canary";
+    else if(process.argv[2] == "dev" || process.argv[2] == "development") channel = "development";
+    else channel = "";
 }
 
 let settingsJson;
@@ -31,6 +21,10 @@ if(platform == 'win32') {
     settingsJson = join(homedir(), 'Library', 'Application Support', `discord${channel}`, 'settings.json');
 }
 
+if(!existsSync(settingsJson)) {
+    console.log("Error: No settings.json found. Please check that the client you selected is installed.");
+    process.exit(1);
+}
 let data = JSON.parse(readFileSync(settingsJson).toString());
 console.time("minify");
 terser.minify(readFileSync(join(__dirname, "openloader.js")).toString(), {
@@ -39,6 +33,10 @@ terser.minify(readFileSync(join(__dirname, "openloader.js")).toString(), {
 }).then(minified => {
     minified = minified.code;
     console.timeEnd("minify");
+    if(!data.openasar) {
+        console.log("Error: No OpenAsar found in your settings.json. Please install OpenAsar (https://openasar.dev) before attempting to install OpenLoader.");
+        process.exit(1);
+    }
     data.openasar.js = minified;
     writeFileSync(settingsJson, JSON.stringify(data, undefined, "\t"));
     console.log("Done! You can now restart your Discord client.\nFully restart it by right clicking it in the system tray and clicking Quit.\n\n\nPress any key to exit the installer...");
