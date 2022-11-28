@@ -1,13 +1,32 @@
 <h1 align="center">OpenLoader</h1>
 A plugin loader for Discord made possible by OpenAsar.<br><br>
 
-> **Warning** OpenLoader is in **alpha**, and as such, it is unstable.
+> **Warning** OpenLoader is in **alpha**, and as such, you should not fully rely on it.
 
 > **Note** Proper documentation coming soon.
 
-## Builds
-There are nightly builds that you can download available [here](https://github.com/WorriedArrow/OpenLoader/releases/nightly).
-As well as this, there are stable builds that you can download available [here](https://github.com/WorriedArrow/OpenLoader/releases/stable).
+## Installation
+First, ensure you have [OpenAsar](https://openasar.dev) installed.
+
+We recommend stable builds available [here](https://github.com/WorriedArrow/OpenLoader/releases/stable). These have been tested thoroughly and have been confirmed to work.<br>
+If you want to use fresh, potentially buggy builds, they are available [here](https://github.com/WorriedArrow/OpenLoader/releases/nightly).
+> **Warning** Nightly builds are **not** recommended for normal users, but they are generally fairly safe.
+
+To install OpenLoader, simply run the executable you downloaded for your platform. It's fairly quick to set up.
+
+## Building
+### Prerequisites
+- [NodeJS](https://nodejs.org) and [NPM](https://npmjs.org)
+- the [pkg](https://npmjs.org/package/pkg) NPM package (installed globally with `npm install -g pkg`)
+
+To build the OpenLoader installer, simply go to the root of where you cloned this repo and run:
+```
+$ pkg .
+```
+Then, the executables should be in `/dist`. Run your platform's executable to test your code out!
+
+Alternatively, for quick testing, you can run `node .` in the root of where you cloned this repo.
+This doesn't build executables, but it applies your modified OpenLoader code to Discord.
 
 ## Plugins
 To make a plugin, you can put it in a `.plugin` file which holds a simple JSON format. Example plugin is below.
