@@ -1,6 +1,6 @@
 {
   "name": "openloader",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A plugin loader for Discord made possible by OpenAsar.",
   "main": "index.js",
   "type": "commonjs",
