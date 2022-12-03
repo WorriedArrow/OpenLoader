@@ -364,12 +364,6 @@ function definePlugin(plugin) {
     localStorage.setItem("openloader", JSON.stringify(modified));
 }
 
-/**
- * The OpenLoader API object.
- */
-const OpenLoader = {
-    client: new Client()
-}
 
 class Client {
     /**
@@ -396,4 +390,11 @@ class Client {
     maximize() {
         DiscordNative.window.maximize();
     }
+}
+
+/**
+ * The OpenLoader API object.
+ */
+const OpenLoader = {
+    client: new Client()
 }
