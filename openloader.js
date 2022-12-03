@@ -1,5 +1,5 @@
 /**
- * OpenLoader 0.1.0
+ * OpenLoader 0.1.1
  * Copyright (c) 2022 WorriedArrow.
  *
  * Source: https://github.com/WorriedArrow/OpenLoader/
@@ -70,7 +70,7 @@ setTimeout(() => console.log("%cWelcome to OpenLoader.", "font-size: 5rem; color
 // Add OpenLoader version to the title bar
 if(document.querySelector(".wordmark-2u86JB")) {
 var e = document.createElement('span');
-e.textContent = "| OpenLoader 0.1.0";
+e.textContent = "| OpenLoader 0.1.1";
 document.querySelector(".wordmark-2u86JB").appendChild(e);
 document.querySelector(".wordmark-2u86JB").style.height = "32px";
 document.querySelector(".wordmark-2u86JB").style.display = "flex";
@@ -362,4 +362,39 @@ function definePlugin(plugin) {
         version: plugin.version,
     });
     localStorage.setItem("openloader", JSON.stringify(modified));
+}
+
+
+class Client {
+    /**
+     * Completely relaunches the client.
+     */
+    relaunch() {
+        DiscordNative.remoteApp.relaunch();
+    }
+    /**
+     * Minimizes the window.
+     */
+    minimize() {
+        DiscordNative.window.minimize();
+    }
+    /**
+     * Restores the window, reopening the window if it is closed.
+     */
+    restore() {
+        DiscordNative.window.restore();
+    }
+    /**
+     * Maximizes the window, restoring if it is minimized and reopening the window if it is closed.
+     */
+    maximize() {
+        DiscordNative.window.maximize();
+    }
+}
+
+/**
+ * The OpenLoader API object.
+ */
+const OpenLoader = {
+    client: new Client()
 }
