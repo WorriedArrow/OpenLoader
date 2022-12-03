@@ -1,0 +1,2 @@
+- name: Add GitHub Sponsors to Readme
+  uses: JamesIves/github-sponsors-readme-action@v1.2.2
