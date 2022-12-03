@@ -3,7 +3,7 @@ const { homedir, platform } = require("os");
 const { join } = require("path");
 const terser = require("terser");
 
-let channel;
+let channel = "";
 
 if(process.argv.length > 2) {
     if(process.argv[2] == "ptb") channel = "ptb";
@@ -20,6 +20,8 @@ if(platform == 'win32') {
 } else if(platform == 'darwin') {
     settingsJson = join(homedir(), 'Library', 'Application Support', `discord${channel}`, 'settings.json');
 }
+
+console.log(settingsJson);
 
 if(!existsSync(settingsJson)) {
     console.log("Error: No settings.json found. Please check that the client you selected is installed.");
