@@ -1,5 +1,5 @@
 /**
- * OpenLoader 0.1.1
+ * OpenLoader 0.1.2
  * Copyright (c) 2022 WorriedArrow.
  *
  * Source: https://github.com/WorriedArrow/OpenLoader/
@@ -70,7 +70,7 @@ setTimeout(() => console.log("%cWelcome to OpenLoader.", "font-size: 5rem; color
 // Add OpenLoader version to the title bar
 if(document.querySelector(".wordmark-2u86JB")) {
 var e = document.createElement('span');
-e.textContent = "| OpenLoader 0.1.1";
+e.textContent = "| OpenLoader 0.1.2";
 document.querySelector(".wordmark-2u86JB").appendChild(e);
 document.querySelector(".wordmark-2u86JB").style.height = "32px";
 document.querySelector(".wordmark-2u86JB").style.display = "flex";
@@ -106,7 +106,10 @@ setInterval(() => {
     separator.classList.add("separator-2wx7h6");
     var header = document.createElement("div");
     header.classList.add("header-2Kx1US");
-    header.textContent = "OpenLoader";
+    var headerContent = document.createElement("div");
+    headerContent.classList.add("eyebrow-Ejf06y");
+    headerContent.textContent = "OpenLoader";
+    header.appendChild(headerContent);
     var item = document.createElement("div");
     item.classList.add("item-3XjbnG");
     item.classList.add("themed-2-lozF");
@@ -372,6 +375,9 @@ class Client {
     relaunch() {
         DiscordNative.remoteApp.relaunch();
     }
+}
+
+class DiscordWindow {
     /**
      * Minimizes the window.
      */
@@ -392,9 +398,23 @@ class Client {
     }
 }
 
+class StyleInjector {
+    /**
+     * Injects `css` into the Discord client.
+     * @param {String} css the CSS to be injected. 
+     */
+    inject(css) {
+        var element = document.createElement("style");
+        element.textContent = css;
+        document.head.appendChild(element);
+    }
+}
+
 /**
  * The OpenLoader API object.
  */
 const OpenLoader = {
-    client: new Client()
+    client: new Client(),
+    window: new DiscordWindow(),
+    styleInjector: new StyleInjector()
 }
