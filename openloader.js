@@ -399,6 +399,10 @@ class DiscordWindow {
 }
 
 class StyleInjector {
+    /**
+     * Injects `css` into the Discord client.
+     * @param {String} css the CSS to be injected. 
+     */
     inject(css) {
         var element = document.createElement("style");
         element.textContent = css;
