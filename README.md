@@ -44,6 +44,8 @@ $ ./openloader-linux canary
 ```
 would install OpenLoader to Discord Canary.
 
+(all options [here](https://github.com/WorriedArrow/OpenLoader/blob/develop/index.js#L8-L13))
+
 ## Building
 ### Prerequisites
 - [NodeJS](https://nodejs.org) and [NPM](https://npmjs.org)
