@@ -17,7 +17,7 @@ alreadyRun = true;
 // Listen for Ctrl + Shift + R for complete relaunch
 document.addEventListener("keydown", function(event) {
     if (event.ctrlKey && event.shiftKey && event.code === "KeyR") {
-        DiscordNative.remoteApp.relaunch();
+        OpenLoader.client.relaunch();
     }
 });
 
@@ -94,31 +94,39 @@ setInterval(() => {
     const whatsNewText = [...document.querySelectorAll('.item-3XjbnG')].find(x => x.textContent == ("What's New"));
     if(!whatsNewText) return;
     if(!document.querySelector(".ol-plugins-button")) pluginsDisplayed = false;
-    // sep: The seperator right above the What's New button in the settings menu.
+    // The separator right above the What's New button in the settings menu.
     const sep = document.querySelector('.sidebarRegion-1VBisG nav div div:nth-child(' + Array.from(whatsNewText.parentNode.children).indexOf(whatsNewText) + ')');
-    //document.querySelector("#app-mount > div.appDevToolsWrapper-1QxdQf > div > div.app-3xd6d0 > div > div.layers-OrUESM.layers-1YQhyW > div:nth-child(2) > div >  > div > nav > div > div:nth-child(38)")
     if(!sep) {
         pluginsDisplayed = false;
         return;
     }
     if(pluginsDisplayed) return;
-    var separator = document.createElement("div");
-    separator.classList.add("separator-2wx7h6");
-    var header = document.createElement("div");
-    header.classList.add("header-2Kx1US");
-    var headerContent = document.createElement("div");
-    headerContent.classList.add("eyebrow-Ejf06y");
-    headerContent.textContent = "OpenLoader";
-    header.appendChild(headerContent);
-    var item = document.createElement("div");
-    item.classList.add("item-3XjbnG");
-    item.classList.add("themed-2-lozF");
+    var separator = OpenLoader.componentBuilder.createComponent(OpenLoader.components.settingsMenu.separator);
+    var header = OpenLoader.componentBuilder.createComponent(OpenLoader.components.settingsMenu.header, { text: "OpenLoader" });
+    var itemClick = () => {
+        sep.parentNode.childNodes.forEach(node => node.classList.remove("selected-g-kMVV"));
+        item.classList.add("selected-g-kMVV");
+
+        // Load plugins page
+        document.querySelector(".contentColumn-1C7as6").childNodes.forEach(e2 => e2.style.display = "none");
+        var wrapper = document.createElement("div");
+        wrapper.classList.add("ol-page");
+        var head = document.createElement("div");
+        head.innerHTML = '<div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%"><div class="sectionTitle-3j2YI1" style="flex-direction: column"><h3 class="h5-2RwDNl title-3hptVQ marginBottom8-emkd0_">OpenLoader</h3><h2 class="h1-34Txb0 title-3hptVQ defaultColor-2cKwKo defaultMarginh1-EURXsm" id="uid_123">Plugins</h2></div><div style="fill: var(--text-normal); cursor: pointer" onclick="uploadPlugin()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24"><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path></svg></div></div>';
+        head.classList.add("sectionTitle-3j2YI1");
+        content = document.createElement("div");
+        content.style.display = "grid";
+        content.style.gridTemplateColumns = "1fr 1fr 1fr";
+        content.style.rowGap = "44px";
+        content.classList.add("children-1xdcWE");
+        wrapper.appendChild(head);
+        wrapper.appendChild(content);
+        document.querySelector(".contentColumn-1C7as6").appendChild(wrapper);
+        addContent();
+    }
+    var item = OpenLoader.componentBuilder.createComponent(OpenLoader.components.settingsMenu.item, { text: "Plugins", onclick: itemClick });
     item.classList.add("ol-plugins-button");
-    item.textContent = "Plugins";
-    var reloadItem = document.createElement("div");
-    reloadItem.classList.add("item-3XjbnG");
-    reloadItem.classList.add("themed-2-lozF");
-    reloadItem.textContent = "Reload";
+    var reloadItem = OpenLoader.componentBuilder.createComponent(OpenLoader.components.settingsMenu.item, { text: "Reload", onclick: () => location.reload() });
     sep.parentNode.childNodes.forEach(node => {
         if(node.classList.contains("info-3pQQBb") || node.classList.contains("socialLinks-3ywLUf") || node.classList.contains("separator-2wx7h6") || node.classList.contains("header-2Kx1US")) return;
         node.onclick = () => {
@@ -137,62 +145,6 @@ setInterval(() => {
     sep.parentNode.insertBefore(item, sep);
     sep.parentNode.insertBefore(reloadItem, sep);
     pluginsDisplayed = true;
-    item.onclick = () => {
-        sep.parentNode.childNodes.forEach(node => node.classList.remove("selected-g-kMVV"));
-        item.classList.add("selected-g-kMVV");
-
-        // Load plugins page
-        document.querySelector(".contentColumn-1C7as6").childNodes.forEach(e2 => e2.style.display = "none");
-        var wrapper = document.createElement("div");
-        wrapper.classList.add("ol-page");
-        var head = document.createElement("div");
-        head.innerHTML = '<div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%"><div class="sectionTitle-3j2YI1" style="flex-direction: column"><h3 class="h5-2RwDNl title-3hptVQ marginBottom8-emkd0_">OpenLoader</h3><h2 class="h1-34Txb0 title-3hptVQ defaultColor-2cKwKo defaultMarginh1-EURXsm" id="uid_123">Plugins</h2></div><div style="fill: var(--text-normal); cursor: pointer" onclick="uploadPlugin()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24"><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path></svg></div></div>';
-        head.classList.add("sectionTitle-3j2YI1");
-        content = document.createElement("div");
-        content.style.display = "grid";
-        content.style.gridTemplateColumns = "1fr 1fr 1fr";
-        content.style.rowGap = "44px";
-        
-        // html`
-        // <div class="children-1xdcWE" style="display: grid;">
-        //     <div style="border-radius: 8px;background-color: #222;width: 10vw;height: 25vh;position: relative;display: flex;flex-direction: column;justify-content: space-between;align-items: center;">
-        //         <div style="fill: #c72d3b;position: absolute;z-index: 9999999999;top: 6px;right: 4px;color: #c72d3b; cursor: pointer">
-        //             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-        //                 <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd"></path>
-        //             </svg>
-        //         </div>
-        //         <div style="width: 100%;height: 40%;background: url(https://images.pexels.com/photos/5800782/pexels-photo-5800782.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1);border-top-left-radius: 8px;border-top-right-radius: 8px;background-position-x: center;background-position-y: 75%;"></div>
-        //         <div style="color: #eee; padding: 8px; text-align: center">Hello World (Example Plugin)</div>
-        //         <div></div>
-        //         <div style="color: #999;padding: 16px;text-align: center;font-family: var(--font-headline);text-transform: uppercase;font-weight: bold;">by Arrow</div>
-        //     </div>
-        // </div>
-        // `
-        content.classList.add("children-1xdcWE");
-        wrapper.appendChild(head);
-        wrapper.appendChild(content);
-        document.querySelector(".contentColumn-1C7as6").appendChild(wrapper);
-        addContent();
-    }
-    // reloadItem.onclick = () => {
-    //     sep.parentNode.childNodes.forEach(node => node.classList.remove("selected-g-kMVV"));
-    //     reloadItem.classList.add("selected-g-kMVV");
-
-    //     // Load plugins page
-    //     document.querySelector(".contentColumn-1C7as6").childNodes.forEach(e2 => e2.style.display = "none");
-    //     var wrapper = document.createElement("div");
-    //     wrapper.classList.add("ol-page");
-    //     var head = document.createElement("div");
-    //     head.innerHTML = '<div class="sectionTitle-3j2YI1" style="flex-direction: column"><h3 class="h5-2RwDNl title-3hptVQ marginBottom8-emkd0_">OpenLoader</h3><h2 class="h1-34Txb0 title-3hptVQ defaultColor-2cKwKo defaultMarginh1-EURXsm" id="uid_123">Reload</h2></div>';
-    //     head.classList.add("sectionTitle-3j2YI1");
-    //     var content = document.createElement("div");
-    //     content.innerHTML = '<div class="colorStandard-1Xxp1s size14-k_3Hy4 description-30xx7u formText-2ngGjI marginBottom20-315RVT modeDefault-2fEh7a">Reloading the client reloads OpenLoader itself along with any plugins you may have installed.</div><button onclick="location.reload()" style="min-width: fit-content" type="button" class="button-f2h6uQ lookFilled-yCfaCM colorBrand-I6CyqQ sizeSmall-wU2dO-"><div class="contents-3ca1mk">Reload Client</div></button><div class="colorStandard-1Xxp1s size14-k_3Hy4 description-30xx7u formText-2ngGjI marginBottom20-315RVT modeDefault-2fEh7a">Pro tip: You can use Command/Control + R to quickly reload without accessing this menu.</div>'
-    //     content.classList.add("children-1xdcWE");
-    //     wrapper.appendChild(head);
-    //     wrapper.appendChild(content);
-    //     document.querySelector(".contentColumn-1C7as6").appendChild(wrapper);
-    // }
-    reloadItem.onclick = () => location.reload();
 }, 500)
 })();
 
@@ -235,13 +187,11 @@ function removeAllChildren(element) {
     if(element.childNodes.length > 0) removeAllChildren(element); // fix for some weird behavior that makes it so sometimes elements aren't removed
 }
 
-function addContent() {
+function addContent(content) {
     var plugins = JSON.parse(localStorage.getItem("openloader")).plugins;
     removeAllChildren(content);
     if(plugins.length == 0) {
-        var elem = document.createElement("div");
-        elem.classList.add("description-30xx7u");
-        elem.textContent = "Oh no, looks like you don't have any plugins! Add one using the + button.";
+        var elem = OpenLoader.componentBuilder.createComponent(OpenLoader.components.generic.text, { text: "Oh no, looks like you don't have any plugins! Add one using the + button." })
         content.style.display = "block";
         content.appendChild(elem);
         return;
@@ -318,7 +268,7 @@ function addContent() {
     }
 }
 
-async function uploadPlugin() {
+function uploadPlugin() {
     const element = document.createElement("input");
     element.type = "file";
     element.accept = ".plugin";
@@ -396,6 +346,12 @@ class DiscordWindow {
     maximize() {
         DiscordNative.window.maximize();
     }
+    /**
+     * Closes the window, remains in system tray.
+     */
+    close() {
+        DiscordNative.window.close();
+    }
 }
 
 class StyleInjector {
@@ -410,11 +366,403 @@ class StyleInjector {
     }
 }
 
+
+class ComponentBuilder {
+    createComponent(component, options = {}) {
+        if(!component) throw new Error("Unknown component: " + component);
+        return component(options);
+    }
+    createMethod(category, methodName, method, createCategory = true) {
+        if(!OpenLoader.components[category] && !createCategory) throw new Error("Category not found: " + category + ". Please use createCategory = true to automatically create the category.");
+        if(!OpenLoader.components[category]) OpenLoader.components[category] = {};
+        OpenLoader.components[category][methodName] = method;
+    }
+    parseHTML(html, fragment = false) {
+        const template = document.createElement("template");
+        template.innerHTML = html;
+        const node = template.content.cloneNode(true);
+        if (fragment) return node;
+        return node.childNodes.length > 1 ? node.childNodes : node.childNodes[0];
+    }
+}
+
 /**
  * The OpenLoader API object.
  */
 const OpenLoader = {
     client: new Client(),
     window: new DiscordWindow(),
-    styleInjector: new StyleInjector()
+    styleInjector: new StyleInjector(),
+    componentBuilder: new ComponentBuilder(),
+    components: {
+        generic: {
+            text: options => {
+                var base = document.createElement("div");
+                base.classList.add("description-30xx7u");
+                base.textContent = options.text;
+                return base;
+            },
+        },
+        settingsMenu: {
+            separator: () => {
+                var base = document.createElement("div");
+                base.classList.add("separator-2wx7h6");
+                return base;
+            },
+            header: options => {
+                var base = document.createElement("div");
+                base.classList.add("header-2Kx1US");
+                var headerContent = document.createElement("div");
+                headerContent.classList.add("eyebrow-Ejf06y");
+                headerContent.textContent = options.text;
+                base.appendChild(headerContent);
+                return base;
+            },
+            item: options => {
+                var base = document.createElement("div");
+                base.classList.add("item-3XjbnG");
+                base.classList.add("themed-2-lozF");
+                base.textContent = options.text;
+                base.onclick = options.onclick;
+                return base;
+            }
+        }
+    },
+    queries: {
+        generic: {
+            layerContainer: () => document.querySelector(".layerContainer-2v_Sit"),
+        }
+    }
 }
+
+// Require syntax
+var imports = {}
+
+function _reqInternal(id) {
+    return imports[id]
+}
+/**
+ * Requires the specified module.
+ * @param {String} id 
+ * @returns The module, or null if the module does not exist.
+ */
+function require(id) {
+    return _reqInternal(id) ? _reqInternal(id).default ?? null : null
+}
+
+function _expInternal(id, content) {
+    imports[id] = content
+}
+
+function exportRequire(id, def) {
+    if(_reqInternal(id)) throw new Error("Already defined.")
+    _expInternal(id, {
+        default: def
+    })
+}
+
+/**
+ * The following code has been created by the wonderful team at BetterDiscord.
+ * 
+ * Check out their mod [here](https://betterdiscord.app)
+ */
+class Filters {
+    static byProps(props, filter = m => m) {
+        return module => {
+            if (!module) return false;
+            if (typeof(module) !== "object" && typeof(module) !== "function") return false;
+            const component = filter(module);
+            if (!component) return false;
+            for (let p = 0; p < props.length; p++) {
+                if (!(props[p] in component)) return false;
+            }
+            return true;
+        };
+    }
+
+    static byPrototypeFields(fields, filter = m => m) {
+        return module => {
+            if (!module) return false;
+            if (typeof(module) !== "object" && typeof(module) !== "function") return false;
+            const component = filter(module);
+            if (!component) return false;
+            if (!component.prototype) return false;
+            for (let f = 0; f < fields.length; f++) {
+                if (!(fields[f] in component.prototype)) return false;
+            }
+            return true;
+        };
+    }
+
+    static byRegex(search, filter = m => m) {
+        return module => {
+            const method = filter(module);
+            if (!method) return false;
+            let methodString = "";
+            try {methodString = method.toString([]);}
+            catch (err) {methodString = method.toString();}
+            return methodString.search(search) !== -1;
+        };
+    }
+
+    static byStrings(...strings) {
+        return module => {
+            if (!module?.toString || typeof(module?.toString) !== "function") return; 
+            let moduleString = "";
+            try {moduleString = module?.toString([]);}
+            catch (err) {moduleString = module?.toString();}
+            if (!moduleString) return false; 
+            for (const s of strings) {
+                if (!moduleString.includes(s)) return false;
+            }
+            return true;
+        };
+    }
+
+    static byDisplayName(name) {
+        return module => {
+            return module && module.displayName === name;
+        };
+    }
+
+    static combine(...filters) {
+        return module => {
+            return filters.every(filter => filter(module));
+        };
+    }
+}
+
+
+const hasThrown = new WeakSet();
+
+const wrapFilter = filter => (exports, module, moduleId) => {
+    try {
+        if (exports?.default?.remove && exports?.default?.set && exports?.default?.clear && exports?.default?.get && !exports?.default?.sort) return false;
+        if (exports.remove && exports.set && exports.clear && exports.get && !exports.sort) return false;
+        if (exports?.default?.getToken || exports?.default?.getEmail || exports?.default?.showToken) return false;
+        if (exports.getToken || exports.getEmail || exports.showToken) return false;
+        return filter(exports, module, moduleId);
+    }
+    catch (err) {
+        hasThrown.add(filter);
+        return false;
+    }
+};
+
+class WebpackModules {
+    static find(filter, first = true) {return this.getModule(filter, {first});}
+    static findAll(filter) {return this.getModule(filter, {first: false});}
+    static findByUniqueProperties(props, first = true) {return first ? this.getByProps(...props) : this.getAllByProps(...props);}
+    static findByDisplayName(name) {return this.getByDisplayName(name);}
+    static getModule(filter, options = {}) {
+        const {first = true, defaultExport = true, searchExports = false} = options;
+        const wrappedFilter = wrapFilter(filter);
+        const modules = this.getAllModules();
+        const rm = [];
+        const indices = Object.keys(modules);
+        for (let i = 0; i < indices.length; i++) {
+            const index = indices[i];
+            if (!modules.hasOwnProperty(index)) continue;
+            const module = modules[index];
+            const {exports} = module;
+            if (!exports || exports === window || exports === document.documentElement) continue;
+            if (typeof(exports) === "object" && searchExports) {
+                for (const key in exports) {
+                    let foundModule = null;
+                    const wrappedExport = exports[key];
+                    if (!wrappedExport) continue;
+                    if (wrappedFilter(wrappedExport, module, index)) foundModule = wrappedExport;
+                    if (!foundModule) continue;
+                    if (first) return foundModule;
+                    rm.push(foundModule);
+                }
+            }
+            else {
+                let foundModule = null;
+                if (exports.Z && wrappedFilter(exports.Z, module, index)) foundModule = defaultExport ? exports.Z : exports;
+                if (exports.ZP && wrappedFilter(exports.ZP, module, index)) foundModule = defaultExport ? exports.ZP : exports;
+                if (exports.__esModule && exports.default && wrappedFilter(exports.default, module, index)) foundModule = defaultExport ? exports.default : exports;
+                if (wrappedFilter(exports, module, index)) foundModule = exports;
+                if (!foundModule) continue;
+                if (first) return foundModule;
+                rm.push(foundModule);
+            }
+        }
+        return first || rm.length == 0 ? undefined : rm;
+    }
+
+    static getBulk(...queries) {
+        const modules = this.getAllModules();
+        const returnedModules = Array(queries.length);
+        const indices = Object.keys(modules);
+        for (let i = 0; i < indices.length; i++) {
+            const index = indices[i];
+            if (!modules.hasOwnProperty(index)) continue;
+            const module = modules[index];
+            const {exports} = module;
+            if (!exports || exports === window || exports === document.documentElement) continue;
+            for (let q = 0; q < queries.length; q++) {
+                const query = queries[q];
+                const {filter, first = true, defaultExport = true, searchExports = false} = query;
+                if (first && returnedModules[q]) continue; 
+                if (!first && !returnedModules[q]) returnedModules[q] = []; 
+                const wrappedFilter = wrapFilter(filter);
+                if (typeof(exports) === "object" && searchExports) {
+                    for (const key in exports) {
+                        let foundModule = null;
+                        const wrappedExport = exports[key];
+                        if (!wrappedExport) continue;
+                        if (wrappedFilter(wrappedExport, module, index)) foundModule = wrappedExport;
+                        if (!foundModule) continue;
+                        if (first) returnedModules[q] = foundModule;
+                        else returnedModules[q].push(foundModule);
+                    }
+                }
+                else {
+                    let foundModule = null;
+                    if (exports.Z && wrappedFilter(exports.Z, module, index)) foundModule = defaultExport ? exports.Z : exports;
+                    if (exports.ZP && wrappedFilter(exports.ZP, module, index)) foundModule = defaultExport ? exports.ZP : exports;
+                    if (exports.__esModule && exports.default && wrappedFilter(exports.default, module, index)) foundModule = defaultExport ? exports.default : exports;
+                    if (wrappedFilter(exports, module, index)) foundModule = exports;
+                    if (!foundModule) continue;
+                    if (first) returnedModules[q] = foundModule;
+                    else returnedModules[q].push(foundModule);
+                }
+            }
+        }
+        return returnedModules;
+    }
+    static getModules(filter) {return this.getModule(filter, {first: false});}
+    static getByDisplayName(name) {
+        return this.getModule(Filters.byDisplayName(name));
+    }
+    static getByRegex(regex, first = true) {
+        return this.getModule(Filters.byRegex(regex), {first});
+    }
+    static getByPrototypes(...prototypes) {
+        return this.getModule(Filters.byPrototypeFields(prototypes));
+    }
+    static getAllByPrototypes(...prototypes) {
+        return this.getModule(Filters.byPrototypeFields(prototypes), {first: false});
+    }
+    static getByProps(...props) {
+        return this.getModule(Filters.byProps(props));
+    }
+    static getAllByProps(...props) {
+        return this.getModule(Filters.byProps(props), {first: false});
+    }
+    static getByString(...strings) {
+        return this.getModule(Filters.byStrings(...strings));
+    }
+    static getAllByString(...strings) {
+        return this.getModule(Filters.byStrings(...strings), {first: false});
+    }
+    static getLazy(filter, options = {}) {
+        const {signal: abortSignal, defaultExport = true, searchExports = false} = options;
+        const fromCache = this.getModule(filter, {defaultExport, searchExports});
+        if (fromCache) return Promise.resolve(fromCache);
+        const wrappedFilter = wrapFilter(filter);
+        return new Promise((resolve) => {
+            const cancel = () => this.removeListener(listener);
+            const listener = function(exports) {
+                if (!exports || exports === window || exports === document.documentElement) return;
+                let foundModule = null;
+                if (typeof(exports) === "object" && searchExports) {
+                    for (const key in exports) {
+                        foundModule = null;
+                        const wrappedExport = exports[key];
+                        if (!wrappedExport) continue;
+                        if (wrappedFilter(wrappedExport)) foundModule = wrappedExport;
+                    }
+                }
+                else {
+                    if (exports.Z && wrappedFilter(exports.Z)) foundModule = defaultExport ? exports.Z : exports;
+                    if (exports.ZP && wrappedFilter(exports.ZP)) foundModule = defaultExport ? exports.ZP : exports;
+                    if (exports.__esModule && exports.default && wrappedFilter(exports.default)) foundModule = defaultExport ? exports.default : exports;
+                    if (wrappedFilter(exports)) foundModule = exports;
+                }
+                if (!foundModule) return;
+                cancel();
+                resolve(foundModule);
+            };
+            this.addListener(listener);
+            abortSignal?.addEventListener("abort", () => {
+                cancel();
+                resolve();
+            });
+        });
+    }
+    static get require() {
+        if (this._require) return this._require;
+        const id = "ol-webpackmodules";
+        let __discord_webpack_require__;
+        if (typeof(webpackJsonp) !== "undefined") {
+            __discord_webpack_require__ = window.webpackJsonp.push([[], {
+                [id]: (module, exports, __internal_require__) => module.exports = __internal_require__
+            }, [[id]]]);
+        }
+        else if (typeof(window[this.chunkName]) !== "undefined") {
+            window[this.chunkName].push([[id], 
+                {},
+                __internal_require__ => __discord_webpack_require__ = __internal_require__
+            ]);
+        }
+
+        delete __discord_webpack_require__.m[id];
+        delete __discord_webpack_require__.c[id];
+        return this._require = __discord_webpack_require__;
+    }
+    static getAllModules() {
+        return this.require.c;
+    }
+    static get chunkName() {return "webpackChunkdiscord_app";}
+    static initialize() {
+        this.handlePush = this.handlePush.bind(this);
+        this.listeners = new Set();
+        this.__ORIGINAL_PUSH__ = window[this.chunkName].push;
+        Object.defineProperty(window[this.chunkName], "push", {
+            configurable: true,
+            get: () => this.handlePush,
+            set: (newPush) => {
+                this.__ORIGINAL_PUSH__ = newPush;
+                Object.defineProperty(window[this.chunkName], "push", {
+                    value: this.handlePush,
+                    configurable: true,
+                    writable: true
+                });
+            }
+        });
+    }    
+    static addListener(listener) {
+        this.listeners.add(listener);
+        return this.removeListener.bind(this, listener);
+    }
+    static removeListener(listener) {return this.listeners.delete(listener);}
+    static handlePush(chunk) {
+        const [, modules] = chunk;
+        for (const moduleId in modules) {
+            const originalModule = modules[moduleId];
+            modules[moduleId] = (module, exports, require) => {
+                try {
+                    Reflect.apply(originalModule, null, [module, exports, require]);
+                    const listeners = [...this.listeners];
+                    for (let i = 0; i < listeners.length; i++) {
+                        try {listeners[i](exports);}
+                        catch (error) {}
+                    }
+                }
+                catch (error) {}
+            };
+            Object.assign(modules[moduleId], originalModule, {
+                toString: () => originalModule.toString()
+            });
+        }
+        return Reflect.apply(this.__ORIGINAL_PUSH__, window[this.chunkName], [chunk]);
+    }
+}
+
+WebpackModules.initialize();
+
+// BD code ends here.
+
+exportRequire("react", WebpackModules.getByProps("createElement", "cloneElement"));

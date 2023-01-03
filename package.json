@@ -3,7 +3,6 @@
   "version": "0.1.2",
   "description": "A plugin loader for Discord made possible by OpenAsar.",
   "main": "index.js",
-  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,9 +17,9 @@
       "win-node14",
       "mac-node14"
     ],
-    "outputPath": "dist"
+    "outputPath": "installer"
   },
   "dependencies": {
-    "terser": "^5.16.0"
+    "esbuild": "^0.16.10"
   }
 }
