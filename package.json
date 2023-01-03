@@ -1,6 +1,6 @@
 {
   "name": "openloader",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A plugin loader for Discord made possible by OpenAsar.",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "pkg": {
-    "assets": "openloader.js",
+    "assets": "src/**/*",
     "targets": [
       "linux-node14",
       "win-node14",
