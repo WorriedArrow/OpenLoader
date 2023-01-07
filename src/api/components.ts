@@ -77,41 +77,41 @@ export default {
                 layer.classList.add("layer-1Ixpg3", "ol-modal");
                 layer.innerHTML = `
                 <div class="focusLock-2tveLW" role="dialog" aria-label="${options.title}" tabindex="-1" aria-modal="true">
-                <div class="root-g14mjS small-23Atuv fullscreenOnMobile-ixj0e3" style="opacity: 0; transform: scale(0); transition: transform 135ms ease-in-out, opacity 135ms ease-in-out">
-                    <div class="flex-2S1XBF flex-3BkGQD horizontal-112GEH horizontal-1Piu5- flex-3BkGQD directionRow-2Iu2A9 justifyStart-2Mwniq alignCenter-14kD11 noWrap-hBpHBz header-1zd7se" id="uid_841" style="flex: 0 0 auto">
-                    <h1 class="defaultColor-1EVLSt heading-lg-semibold-2Z_RS3 defaultColor-1GKx81" data-text-variant="heading-lg/medium">
-                        ${options.title}
-                    </h1>
-                    </div>
-                    <div class="content-2hZxGK thin-31rlnD scrollerBase-_bVAAt" dir="ltr" style="overflow: hidden scroll; padding-right: 8px">
-                    <div class="defaultColor-1EVLSt text-md-normal-304U3g" data-text-variant="text-md/normal">
-                        ${options.contents}
-                    </div>
-                    <div aria-hidden="true" style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 0px;"></div>
-                    </div>
-                    <div class="flex-2S1XBF flex-3BkGQD horizontalReverse-60Katr horizontalReverse-2QssvL flex-3BkGQD directionRowReverse-HZatnx justifyStart-2Mwniq alignStretch-Uwowzr noWrap-hBpHBz footer-31IekZ footerSeparator-VzAYwb" style="flex: 0 0 auto">
-                    <div class="flex-2S1XBF flex-3BkGQD horizontal-112GEH horizontal-1Piu5- flex-3BkGQD directionRow-2Iu2A9 justifyEnd-2G0m6w alignStretch-Uwowzr noWrap-hBpHBz" style="flex: 1 1 auto">
-                    ${options.cancelButton ? `
-                        <button type="button" class="cancelButton-30e0cf button-f2h6uQ lookFilled-yCfaCM colorPrimary-2AuQVo sizeMedium-2bFIHr grow-2sR_-F ol-button-0">
-                        <div class="contents-3ca1mk">
-                            ${options.buttons[0].content}
+                    <div class="root-g14mjS small-23Atuv fullscreenOnMobile-ixj0e3" style="opacity: 0; transform: scale(0); transition: transform 135ms ease-in-out, opacity 135ms ease-in-out">
+                        <div class="flex-2S1XBF flex-3BkGQD horizontal-112GEH horizontal-1Piu5- flex-3BkGQD directionRow-2Iu2A9 justifyStart-2Mwniq alignCenter-14kD11 noWrap-hBpHBz header-1zd7se" id="uid_841" style="flex: 0 0 auto">
+                            <h1 class="defaultColor-1EVLSt heading-lg-semibold-2Z_RS3 defaultColor-1GKx81" data-text-variant="heading-lg/medium">
+                                ${options.title}
+                            </h1>
                         </div>
-                        </button>
-                        <button type="button" class="button-f2h6uQ lookFilled-yCfaCM colorBrand-I6CyqQ sizeMedium-2bFIHr grow-2sR_-F ol-button-1">
-                        <div class="contents-3ca1mk">
-                            ${options.buttons[1].content}
+                        <div class="content-2hZxGK thin-31rlnD scrollerBase-_bVAAt" dir="ltr" style="overflow: hidden scroll; padding-right: 8px">
+                            <div class="defaultColor-1EVLSt text-md-normal-304U3g" data-text-variant="text-md/normal">
+                                ${options.contents}
+                            </div>
+                                <div aria-hidden="true" style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 0px;"></div>
+                            </div>
+                            <div class="flex-2S1XBF flex-3BkGQD horizontalReverse-60Katr horizontalReverse-2QssvL flex-3BkGQD directionRowReverse-HZatnx justifyStart-2Mwniq alignStretch-Uwowzr noWrap-hBpHBz footer-31IekZ footerSeparator-VzAYwb" style="flex: 0 0 auto">
+                                <div class="flex-2S1XBF flex-3BkGQD horizontal-112GEH horizontal-1Piu5- flex-3BkGQD directionRow-2Iu2A9 justifyEnd-2G0m6w alignStretch-Uwowzr noWrap-hBpHBz" style="flex: 1 1 auto">
+                                ${options.cancelButton ? `
+                                    <button type="button" class="cancelButton-30e0cf button-f2h6uQ lookFilled-yCfaCM colorPrimary-2AuQVo sizeMedium-2bFIHr grow-2sR_-F ol-button-0">
+                                        <div class="contents-3ca1mk">
+                                            ${options.buttons[0].content}
+                                        </div>
+                                    </button>
+                                    <button type="button" class="button-f2h6uQ lookFilled-yCfaCM colorBrand-I6CyqQ sizeMedium-2bFIHr grow-2sR_-F ol-button-1">
+                                        <div class="contents-3ca1mk">
+                                            ${options.buttons[1].content}
+                                        </div>
+                                    </button>
+                                    ` : `
+                                    <button type="button" class="button-f2h6uQ lookFilled-yCfaCM colorBrand-I6CyqQ sizeMedium-2bFIHr grow-2sR_-F ol-button-0">
+                                        <div class="contents-3ca1mk">
+                                            ${options.buttons[0].content}
+                                        </div>
+                                    </button>
+                            `}
+                            </div>
                         </div>
-                        </button>
-                        ` : `
-                        <button type="button" class="button-f2h6uQ lookFilled-yCfaCM colorBrand-I6CyqQ sizeMedium-2bFIHr grow-2sR_-F ol-button-0">
-                        <div class="contents-3ca1mk">
-                            ${options.buttons[0].content}
-                        </div>
-                        </button>
-                    `}
                     </div>
-                    </div>
-                </div>
                 </div>
                 `;
                 [...document.querySelectorAll('.layerContainer-2v_Sit')].reverse()[1].appendChild(backdrop);
@@ -138,8 +138,10 @@ export default {
                 backdrop.style.opacity = "0.57";
                 modalRoot.style.opacity = "0.07";
                 modalRoot.style.transform = "scale(0.8)";
-                setTimeout(() => modalRoot.remove(), 135);
-                setTimeout(() => backdrop.remove(), 135);
+                setTimeout(() => {
+                    document.querySelector(".ol-modal")?.remove();
+                    document.querySelector(".ol-modal-backdrop")?.remove();
+                }, 135);
             }
         },
     },
