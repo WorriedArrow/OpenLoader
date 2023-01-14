@@ -57,7 +57,7 @@ $ npm install
 ```
 Then, simply run:
 ```
-$ pkg .
+$ npm run build
 ```
 Then, the executables should be in `/dist`. Run your platform's executable to test your code out!
 
