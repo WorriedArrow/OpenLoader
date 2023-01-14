@@ -115,3 +115,6 @@ openloader.js
 
 # Installer
 installer/
+
+# App to package
+index.js

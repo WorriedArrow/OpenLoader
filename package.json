@@ -4,22 +4,27 @@
   "description": "A plugin loader for Discord made possible by OpenAsar.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node dev",
+    "build": "node makeInstaller.js"
   },
   "bin": "index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "pkg": {
-    "assets": "src/**/*",
+    "assets": "dist/openloader.min.js",
     "targets": [
-      "linux-node14",
-      "win-node14",
-      "mac-node14"
+      "node18-win-x64",
+      "node18-linux-x64",
+      "node18-macos-x64"
     ],
     "outputPath": "installer"
   },
   "dependencies": {
     "esbuild": "^0.16.10"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "pkg": "^5.8.0"
   }
 }

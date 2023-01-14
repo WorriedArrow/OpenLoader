@@ -1,7 +1,6 @@
 const { readFileSync, writeFileSync, existsSync } = require("fs");
 const { homedir, platform } = require("os");
 const { join } = require("path");
-const { buildSync } = require("esbuild");
 
 let channel = "";
 
@@ -29,35 +28,7 @@ if(!existsSync(settingsJson)) {
 }
 
 let data = JSON.parse(readFileSync(settingsJson).toString());
-console.time("build");
-
-buildSync({
-    entryPoints: [ join(__dirname, "src", "entrypoint.ts") ],
-    bundle: true,
-    minify: false,
-    treeShaking: false,
-    platform: "neutral",
-    format: "esm",
-    target: "es2022",
-    outfile: join(__dirname, "dist", "openloader.js"),
-})
-
-buildSync({
-    entryPoints: [ join(__dirname, "src", "entrypoint.ts") ],
-    bundle: true,
-    minifyWhitespace: true,
-    minifySyntax: true,
-    minifyIdentifiers: false,
-    treeShaking: false,
-    platform: "neutral",
-    format: "esm",
-    target: "es2022",
-    sourcemap: "external",
-    outfile: join(__dirname, "dist", "openloader.min.js"),
-})
-
-var minified = readFileSync(join(__dirname, "dist", "openloader.min.js")).toString();
-console.timeEnd("build");
+var minified = readFileSync(join(__dirname, "dist", "openloader.min.js"));
 if(!data.openasar) {
     console.log("Error: No OpenAsar found in your settings.json. Please install OpenAsar (https://openasar.dev) before attempting to install OpenLoader.");
     process.exit(1);
