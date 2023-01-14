@@ -107,14 +107,14 @@ dist
 setup.cmd
 
 # e
-e.html
-e2.html
+/e.html
+/e2.html
 
 # Old version of the code
-openloader.js
+/openloader.js
 
 # Installer
-installer/
+/installer/
 
 # App to package
-index.js
+/index.js
