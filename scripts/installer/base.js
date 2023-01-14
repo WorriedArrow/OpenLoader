@@ -28,7 +28,7 @@ if(!existsSync(settingsJson)) {
 }
 
 let data = JSON.parse(readFileSync(settingsJson).toString());
-var minified = readFileSync(join(__dirname, "dist", "openloader.min.js"));
+var minified = readFileSync(join(__dirname, "dist", "openloader.min.js")).toString();
 if(!data.openasar) {
     console.log("Error: No OpenAsar found in your settings.json. Please install OpenAsar (https://openasar.dev) before attempting to install OpenLoader.");
     process.exit(1);
