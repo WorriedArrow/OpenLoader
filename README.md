@@ -44,6 +44,8 @@ $ ./openloader-linux canary
 ```
 would install OpenLoader to Discord Canary.
 
+(all options [here](https://github.com/WorriedArrow/OpenLoader/blob/develop/index.js#L8-L13))
+
 ## Building
 ### Prerequisites
 - [NodeJS](https://nodejs.org) and [NPM](https://npmjs.org)
@@ -55,7 +57,7 @@ $ npm install
 ```
 Then, simply run:
 ```
-$ pkg .
+$ npm run build
 ```
 Then, the executables should be in `/dist`. Run your platform's executable to test your code out!
 
