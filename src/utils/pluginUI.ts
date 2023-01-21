@@ -47,6 +47,7 @@ function addContent(content: HTMLElement) {
         (svgWrapper.querySelector('svg') as SVGElement).onmouseleave = () => svgWrapper.style.color = "var(--button-danger-background)";
         elem.onmouseenter = () => svgWrapper.style.right = "8px";
         elem.onmouseleave = () => svgWrapper.style.right = "-32px";
+        OpenLoader.componentBuilder.createComponent(OpenLoader.components.generic.tooltip, { element: svgWrapper, text: "Remove" })
         var bgImage = document.createElement("div");
         bgImage.style.width = "100%";
         bgImage.style.height = "40%";

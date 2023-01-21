@@ -7,6 +7,11 @@ interface Client {
      * Completely relaunches the client.
      */
     relaunch(): void;
+    /**
+     * The current zoom level as a percentage.
+     */
+    get zoom(): number;
+    set zoom(value);
 }
 
 interface DiscordWindow {
@@ -44,7 +49,7 @@ interface ComponentBuilder {
      * @param options The options to pass to the component function.
      * @returns the output element of the component function.
      */
-    createComponent(component: Function, options: any): HTMLElement;
+    createComponent(component: Function, options: any): HTMLElement | void;
     /**
      * 
      * @param category The category, which can be something like "hello.world" to have hello as the category and world as the subcategory.

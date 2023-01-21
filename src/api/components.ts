@@ -144,6 +144,44 @@ export default {
                 }, 135);
             }
         },
+        tooltip: (options: { element: HTMLElement, text: string }) => {
+            options.element.addEventListener("mouseenter", () => {
+                var tooltip = OpenLoader.componentBuilder.parseHTML(`<div class="theme-dark layer-2aCOJ3 disabledPointerEvents-2AmYRc ol-tooltip" style="position: absolute; transition: transform 85ms ease-in-out, opacity 85ms ease-in-out; opacity: 0; transform: scale(0.93);">
+                    <div class="tooltip-14MtrL tooltipTop-1wv5UJ tooltipPrimary-3qLMbS tooltipDisablePointerEvents-1huO19" style="opacity: 1; transform: none;">
+                        <div class="tooltipPointer-3L49xb" style="left: calc(50% + 0px);"></div>
+                        <div class="tooltipContent-Nejnvh">${options.text}</div>
+                    </div>
+                </div>`) as HTMLElement;
+
+                document.querySelector(".notDevTools-1zkgfK > .layerContainer-2v_Sit")?.appendChild(tooltip);
+
+                tooltip.style.top = (options.element.getBoundingClientRect().top - options.element.getBoundingClientRect().height - 12) + "px";
+                tooltip.style.left = (options.element.getBoundingClientRect().left - tooltip.getBoundingClientRect().width / 2 + OpenLoader.client.zoom / 10) + "px";
+                
+                setTimeout(() => {
+                    tooltip.style.opacity = '1';
+                    tooltip.style.transform = 'scale(1)';
+                })
+            })
+
+            options.element.addEventListener("mouseleave", () => {
+                var tooltip = document.querySelector(".ol-tooltip") as HTMLElement;
+                tooltip.style.opacity = '0';
+                tooltip.style.transform = 'scale(0.93)';
+                setTimeout(() => tooltip.remove(), 85);
+            })
+
+            options.element.addEventListener("DOMNodeRemoved", () => {
+                var tooltip = document.querySelector(".ol-tooltip") as HTMLElement;
+                tooltip.style.opacity = '0';
+                tooltip.style.transform = 'scale(0.93)';
+                setTimeout(() => tooltip.remove(), 85);
+            });
+
+            (options.element.parentNode as HTMLElement).onclick = () => {
+
+            }
+        }
     },
     settingsMenu: {
         separator: () => {
@@ -155,7 +193,7 @@ export default {
             var base = document.createElement("div");
             base.classList.add("header-2Kx1US");
             var headerContent = document.createElement("div");
-            headerContent.classList.add("eyebrow-Ejf06y");
+            headerContent.classList.add("eyebrow-1Shfyi");
             headerContent.textContent = options.text;
             base.appendChild(headerContent);
             return base;
