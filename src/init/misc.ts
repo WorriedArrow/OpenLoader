@@ -1,4 +1,4 @@
-import { OpenLoader } from "../main";
+import { OpenLoader, OpenLoaderNative } from "../main";
 import { fadeIn, fadeOut } from "../utils/animations";
 
 export default function initMisc() {
@@ -27,6 +27,8 @@ export default function initMisc() {
     setTimeout(() => {
         fadeOut(notif);
     }, 5500);
+
+    OpenLoaderNative.ipc.send("ol-destroy-splash");
 
     // Print welcome message to the console after 20 seconds.
     setTimeout(() => console.log("%cWelcome to OpenLoader.", "font-size: 5rem; color: #5566ff"), 20000);
