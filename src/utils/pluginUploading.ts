@@ -1,3 +1,4 @@
+import { OpenLoader } from "../main";
 import { fadeOut } from "./animations";
 import addContent from "./pluginUI";
 import { camelCase } from "./strings";
@@ -13,8 +14,7 @@ export function uploadPlugin(content: HTMLElement) {
             const parsed = JSON.parse(raw);
             definePlugin({ author: parsed.author, name: parsed.name, code: parsed.code, version: parsed.version, bannerUrl: parsed.bannerUrl });
         } catch(e) {
-            console.error("[OpenLoader] Error parsing uploaded plugin.");
-            console.log(e);
+            OpenLoader.logger.logSpecial("Plugin Loader", "Error parsing uploaded plugin.", e);
             let notif = document.querySelector(".ol-notif");
             (notif as HTMLElement).style.opacity = "1";
             (notif as HTMLElement).style.display = "block";
@@ -28,7 +28,7 @@ export function uploadPlugin(content: HTMLElement) {
 }
 
 /**
- * 
+ * Defines a plugin.
  * @param plugin The plugin to define.
  * 
  * @example Defines a simple hello world plugin.
@@ -39,7 +39,7 @@ export function uploadPlugin(content: HTMLElement) {
 export function definePlugin(plugin: any) {
     if(!plugin.author || !plugin.name || !plugin.code || !plugin.version || !plugin) throw new Error("Incomplete plugin.");
     var id = camelCase(plugin.author.toLowerCase()) + "." + camelCase(plugin.name.toLowerCase());
-    var modified = JSON.parse(localStorage.getItem("openloader") ?? "");
+    var modified = JSON.parse(localStorage.getItem("openloader") || "");
     modified.plugins.push({
         id: id,
         author: plugin.author,

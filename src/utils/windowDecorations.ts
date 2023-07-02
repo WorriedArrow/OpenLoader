@@ -1,7 +1,10 @@
+import { OpenLoader, OpenLoaderNative } from "../main";
+
 export default function addDecorations() {
-    if(document.querySelector(".wordmark-2u86JB")) {
+    if(document.querySelector(".wordmark-2u86JB") && OpenLoader.settings.main.toggles.showTitleWatermark) {
         var e = document.createElement('span');
-        e.textContent = "| OpenLoader 0.2.0";
+        e.classList.add("ol-watermark");
+        e.textContent = "| OpenLoader " + OpenLoader.build.version.asStr;
         document.querySelector(".wordmark-2u86JB")?.appendChild(e);
         (document.querySelector(".wordmark-2u86JB") as HTMLElement).style.height = "32px";
         (document.querySelector(".wordmark-2u86JB") as HTMLElement).style.display = "flex";
@@ -18,4 +21,6 @@ export default function addDecorations() {
         (document.querySelector(".withFrame-2dL45i") as HTMLElement).style.display = "flex";
         (document.querySelector(".withFrame-2dL45i") as HTMLElement).style.placeItems = "center";
     }
+    // Destroy the splash
+    OpenLoaderNative.ipc.send("ol-destroy-splash");
 }

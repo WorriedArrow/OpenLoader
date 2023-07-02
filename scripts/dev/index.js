@@ -59,11 +59,12 @@ module.exports = () => {
 
     var minified = readFileSync(join(require.main.path, "dist", "openloader.min.js")).toString();
     console.timeEnd("build");
-    if(!data.openasar) {
-        console.log("Error: No OpenAsar found in your settings.json. Please install OpenAsar (https://openasar.dev) before attempting to install OpenLoader.");
-        process.exit(1);
-    }
-    data.openasar.js = minified;
+    // if(!data.openasar) {
+    //     console.log("Error: No OpenAsar or OLNative found in your settings.json. Please install OpenAsar (https://openasar.dev, legacy) before attempting to install OpenLoader.");
+    //     process.exit(1);
+    // }
+    if(data.olNative) data.olNative.code = minified; // New OLNative version
+    else console.error("[WARN] No OLNative found. OL build was not added.");
     writeFileSync(settingsJson, JSON.stringify(data, undefined, "\t"));
     console.log("Done! You can now restart your Discord client.\nFully restart it by right clicking it in the system tray and clicking Quit.\n\n\nPress any key to exit the installer...");
     process.stdin.resume();

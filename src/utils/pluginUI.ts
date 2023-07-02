@@ -2,7 +2,7 @@ import { removeAllChildren } from "./dom";
 import { OpenLoader } from "../main";
 
 function addContent(content: HTMLElement) {
-    var plugins = JSON.parse(localStorage.getItem("openloader") ?? "").plugins;
+    var plugins = JSON.parse(localStorage.getItem("openloader") || "").plugins;
     removeAllChildren(content);
     if(plugins.length == 0) {
         var component = OpenLoader.componentBuilder.createComponent(OpenLoader.components.generic.text, { text: "Oh no, looks like you don't have any plugins! Add one using the + button." })
@@ -47,7 +47,7 @@ function addContent(content: HTMLElement) {
         (svgWrapper.querySelector('svg') as SVGElement).onmouseleave = () => svgWrapper.style.color = "var(--button-danger-background)";
         elem.onmouseenter = () => svgWrapper.style.right = "8px";
         elem.onmouseleave = () => svgWrapper.style.right = "-32px";
-        OpenLoader.componentBuilder.createComponent(OpenLoader.components.generic.tooltip, { element: svgWrapper, text: "Remove" })
+        OpenLoader.componentBuilder.createComponent(OpenLoader.components.generic.tooltip, { node: svgWrapper, text: "Remove", options: { style: "danger" } })
         var bgImage = document.createElement("div");
         bgImage.style.width = "100%";
         bgImage.style.height = "40%";

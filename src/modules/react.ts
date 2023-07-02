@@ -1,3 +1,9 @@
-import { WebpackModules } from "../main";
+import React from "react";
+import define from "../utils/webpack";
 
-export default WebpackModules.getByProps("Component", "createElement");
+const WebpackModules = define();
+
+// @ts-expect-error
+const ReactModule: typeof React = WebpackModules.getByProps("Component", "createElement");
+
+export default ReactModule;

@@ -25,4 +25,8 @@ export default class DiscordWindow {
     close() {
         DiscordNative.window.close();
     }
+
+    get screenWidth() { return Math.max(document.documentElement.clientWidth, window.innerWidth || 0); }
+
+    get screenHeight() { return Math.max(document.documentElement.clientHeight, window.innerHeight || 0); }
 }
