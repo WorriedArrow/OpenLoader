@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "node dev",
+    "dev:ptb": "node dev ptb",
+    "dev:canary": "node dev canary",
+    "dev:development": "node dev development",
     "build": "node makeInstaller.js"
   },
   "bin": "index.js",
@@ -21,10 +24,15 @@
     "outputPath": "installer"
   },
   "dependencies": {
-    "esbuild": "^0.16.10"
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "electron": "^14.2.9",
+    "esbuild": "^0.16.10",
+    "kill-process-by-name": "^1.0.5"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
+    "@types/ps-node": "^0.1.1",
     "pkg": "^5.8.0"
   }
 }

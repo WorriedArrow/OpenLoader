@@ -1,4 +1,4 @@
-import { DiscordNative } from "../main";
+import { DiscordNative, OpenLoaderNative } from "../main";
 
 export default class Client {
     /**
@@ -6,5 +6,14 @@ export default class Client {
      */
     relaunch() {
         DiscordNative.remoteApp.relaunch();
+    }
+    /**
+     * The current zoom level as a percentage.
+     */
+    get zoom() {
+        return OpenLoaderNative.app.getZoomFactor();
+    }
+    set zoom(value) {
+        OpenLoaderNative.app.setZoomFactor(value);
     }
 }

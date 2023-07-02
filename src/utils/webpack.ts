@@ -5,8 +5,21 @@
  * 
  * Note that I have personally modified this code to work with TypeScript, however most of it has remained unchanged.
  */
-
 export class Filters {
+    static byPrototypeKeys(fields: string[], filter = (m: any) => m) {
+        return (module: any) => {
+            if (!module) return false;
+            if (typeof(module) !== "object" && typeof(module) !== "function") return false;
+            const component = filter(module);
+            if (!component) return false;
+            if (!component.prototype) return false;
+            for (let f = 0; f < fields.length; f++) {
+                if (!(fields[f] in component.prototype)) return false;
+            }
+            return true;
+        };
+    }
+
     static byProps(props: string | any[], filter = (m: any) => m) {
         return (module: any) => {
             if (!module) return false;
@@ -112,7 +125,8 @@ export class WebpackModules {
             if (typeof(exports) === "object" && searchExports) {
                 for (const key in exports) {
                     let foundModule = null;
-                    const wrappedExport = exports[key];
+                    let wrappedExport = null;
+                    try {wrappedExport = exports[key];} catch {continue;}
                     if (!wrappedExport) continue;
                     if (wrappedFilter(wrappedExport, module, index)) foundModule = wrappedExport;
                     if (!foundModule) continue;
@@ -141,7 +155,10 @@ export class WebpackModules {
         for (let i = 0; i < indices.length; i++) {
             const index = indices[i];
             if (!modules.hasOwnProperty(index)) continue;
-            const module = modules[index];
+            
+            let module: any = null;
+            try {module = modules[index]} catch {continue;};
+
             const {exports} = module;
             if (!exports || exports === window || exports === document.documentElement) continue;
             for (let q = 0; q < queries.length; q++) {
@@ -150,10 +167,11 @@ export class WebpackModules {
                 if (first && returnedModules[q]) continue; 
                 if (!first && !returnedModules[q]) returnedModules[q] = []; 
                 const wrappedFilter = wrapFilter(filter);
-                if (typeof(exports) === "object" && searchExports) {
+                if (typeof(exports) === "object" && searchExports && exports[Symbol.toStringTag] !== "DOMTokenList") {
                     for (const key in exports) {
                         let foundModule = null;
-                        const wrappedExport = exports[key];
+                        let wrappedExport = null;
+                        try {wrappedExport = exports[key];} catch {continue;}
                         if (!wrappedExport) continue;
                         if (wrappedFilter(wrappedExport, module, index)) foundModule = wrappedExport;
                         if (!foundModule) continue;
@@ -268,7 +286,7 @@ export class WebpackModules {
         this.handlePush = this.handlePush.bind(this);
         this.listeners = new Set();
         this.__ORIGINAL_PUSH__ = window[this.chunkName].push;
-        Object.defineProperty(window[this.chunkName], "push", {
+        /*Object.defineProperty(window[this.chunkName], "push", {
             configurable: true,
             get: () => this.handlePush,
             set: (newPush) => {
@@ -279,7 +297,7 @@ export class WebpackModules {
                     writable: true
                 });
             }
-        });
+        });*/
     }    
     static addListener(listener: (exports: any) => void) {
         this.listeners.add(listener);

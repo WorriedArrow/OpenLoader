@@ -2,7 +2,7 @@ import { removeAllChildren } from "./dom";
 import { OpenLoader } from "../main";
 
 function addContent(content: HTMLElement) {
-    var plugins = JSON.parse(localStorage.getItem("openloader") ?? "").plugins;
+    var plugins = JSON.parse(localStorage.getItem("openloader") || "").plugins;
     removeAllChildren(content);
     if(plugins.length == 0) {
         var component = OpenLoader.componentBuilder.createComponent(OpenLoader.components.generic.text, { text: "Oh no, looks like you don't have any plugins! Add one using the + button." })
@@ -15,7 +15,7 @@ function addContent(content: HTMLElement) {
         var plugin = plugins[i];
         var elem = document.createElement("div");
         elem.style.borderRadius = "8px";
-        elem.style.backgroundColor = "#222";
+        elem.style.backgroundColor = "var(--primary-dark-700)";
         elem.style.width = "10vw";
         elem.style.height = "25vh";
         elem.style.position = "relative";
@@ -33,7 +33,7 @@ function addContent(content: HTMLElement) {
         svgWrapper.style.position = "absolute";
         svgWrapper.style.top = "8px";
         svgWrapper.style.right = "-32px";
-        svgWrapper.style.color = "#c72d3b";
+        svgWrapper.style.color = "var(--button-danger-background)";
         svgWrapper.style.cursor = "pointer";
         svgWrapper.style.transition = "right 0.35s ease-in-out, color 0.35s ease-in-out";
         svgWrapper.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd"></path></svg>';
@@ -43,10 +43,11 @@ function addContent(content: HTMLElement) {
             localStorage.setItem("openloader", JSON.stringify(patched));
             addContent(content);
         }
-        (svgWrapper.querySelector('svg') as SVGElement).onmouseenter = () => svgWrapper.style.color = "#941f2a";
-        (svgWrapper.querySelector('svg') as SVGElement).onmouseleave = () => svgWrapper.style.color = "#c72d3b";
+        (svgWrapper.querySelector('svg') as SVGElement).onmouseenter = () => svgWrapper.style.color = "var(--status-red-600)";
+        (svgWrapper.querySelector('svg') as SVGElement).onmouseleave = () => svgWrapper.style.color = "var(--button-danger-background)";
         elem.onmouseenter = () => svgWrapper.style.right = "8px";
         elem.onmouseleave = () => svgWrapper.style.right = "-32px";
+        OpenLoader.componentBuilder.createComponent(OpenLoader.components.generic.tooltip, { node: svgWrapper, text: "Remove", options: { style: "danger" } })
         var bgImage = document.createElement("div");
         bgImage.style.width = "100%";
         bgImage.style.height = "40%";
@@ -54,19 +55,19 @@ function addContent(content: HTMLElement) {
         bgImage.style.backgroundPositionX = "center";
         bgImage.style.backgroundPositionY = "center";
         var name = document.createElement("div");
-        name.style.color = "#eee";
+        name.style.color = "var(--text-normal)";
         name.style.paddingTop = "16px";
         name.style.textAlign = "center";
         name.textContent = plugin.name;
         var author = document.createElement("div");
         author.style.marginTop = "12px";
-        author.style.color = "#999";
+        author.style.color = "var(--text-muted)";
         author.style.textAlign = "center";
         author.classList.add("h5-2RwDNl");
         author.classList.add("title-3hptVQ");
         author.textContent = "by " + plugin.author;
         var version = document.createElement("div");
-        version.style.color = "#999";
+        version.style.color = "var(--text-muted)";
         version.style.padding = "16px";
         version.style.textAlign = "center";
         version.style.textTransform = "uppercase";

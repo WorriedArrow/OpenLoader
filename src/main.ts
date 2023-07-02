@@ -1,15 +1,19 @@
 import def from "./api/def";
 import initMisc from "./init/misc";
 import initUI from "./init/ui";
-import load from "./loader";
+import load, { fixLocalStorage } from "./loader";
 import defWP, { WebpackModules as WPMods } from "./utils/webpack";
-
-defWP();
-export const OpenLoader = def();
-export const DiscordNative = window["DiscordNative"];
-export const WebpackModules = WPMods;
+import DiscordNative from "../types/discordNative";
+import OpenLoaderNative from "../types/openLoaderNative";
 
 // Initialize everything
+fixLocalStorage();
+export const OpenLoader = def();
+load();
+defWP();
 initMisc();
 initUI();
-load();
+
+export const DiscordNative: DiscordNative = window["DiscordNative"];
+export const WebpackModules = WPMods;
+export const OpenLoaderNative: OpenLoaderNative = window["OpenLoaderNative"];
