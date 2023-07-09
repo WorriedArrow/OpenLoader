@@ -1,5 +1,6 @@
 import { removeAllChildren } from "./dom";
 import { OpenLoader } from "../main";
+import { baseUrl, pluginUI } from "../data/assets.json";
 
 function addContent(content: HTMLElement) {
     var plugins = JSON.parse(localStorage.getItem("openloader") || "").plugins;
@@ -51,7 +52,7 @@ function addContent(content: HTMLElement) {
         var bgImage = document.createElement("div");
         bgImage.style.width = "100%";
         bgImage.style.height = "40%";
-        bgImage.style.backgroundImage = "url(" + (plugin.bannerUrl ?? "https://assets.worriedarrow.xyz/plug.png") + ")";
+        bgImage.style.backgroundImage = "url(" + (plugin.bannerUrl ?? (baseUrl + pluginUI.NO_BANNER_PLUGIN_IMG)) + ")";
         bgImage.style.backgroundPositionX = "center";
         bgImage.style.backgroundPositionY = "center";
         var name = document.createElement("div");

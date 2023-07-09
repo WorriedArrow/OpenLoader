@@ -3,7 +3,7 @@ import { uploadPlugin } from "../utils/pluginUploading";
 import addContent from "../utils/pluginUI";
 import addDecorations from "../utils/windowDecorations";
 import { settingsStrings, toggleFns } from "../api/settingsManager";
-import { about } from "../data/settings.json";
+import { baseUrl, about } from "../data/assets.json";
 
 let timesClicked = 0;
 
@@ -68,7 +68,7 @@ export default function initUI() {
             wrapper.appendChild(content);
             document.querySelector(".contentColumn-1C7as6")?.appendChild(wrapper);
         }
-        var aboutClick = () => {
+        var aboutClick = async () => {
             timesClicked = 0;
             sep.parentNode?.childNodes.forEach(node => (node as HTMLElement).classList.remove("selected-1sf9UK"));
             aboutItem.classList.add("selected-1sf9UK");
@@ -85,7 +85,7 @@ export default function initUI() {
             content.classList.add("children-2C96Ex");
             content.style.alignItems = "center";
             var img = document.createElement("img");
-            img.src = about.iconUrl;
+            img.src = baseUrl + about.OL_IMG;
             img.style.width = "128px";
             img.style.marginBottom = "16px";
             img.onclick = () => {
@@ -128,11 +128,20 @@ export default function initUI() {
                 OpenLoader.componentBuilder.createComponent(OpenLoader.components.generic.tooltip, { node: elem, text: svg.tooltip, options: { style: "info" } });
                 return elem;
             }).forEach(e => svgWrapper.appendChild(e));
+
+            var glitchImg = document.createElement("img");
+            glitchImg.src = baseUrl + about.GLITCH_IMG;
+            glitchImg.style.paddingTop = "32px";
+            glitchImg.style.paddingBottom = "12px";
+            glitchImg.style.height = "96px";
+            var glitchText = OpenLoader.componentBuilder.createComponent(OpenLoader.components.generic.text, { text: "© 2023 GL!TCH" });
             content.appendChild(img);
             content.appendChild(olText);
             content.appendChild(versionText);
             content.appendChild(details);
             content.appendChild(svgWrapper);
+            content.appendChild(glitchImg);
+            content.appendChild(glitchText);
             wrapper.appendChild(head);
             wrapper.appendChild(content);
             document.querySelector(".contentColumn-1C7as6")?.appendChild(wrapper);
@@ -147,6 +156,7 @@ export default function initUI() {
             (node as HTMLElement).onclick = () => {
                 pluginsItem.classList.remove("selected-1sf9UK");
                 settingsItem.classList.remove("selected-1sf9UK");
+                aboutItem.classList.remove("selected-1sf9UK");
                 (node as HTMLElement).classList.add("selected-1sf9UK");
                 document.querySelectorAll(".ol-page").forEach(elem => elem.remove());
                 // Fix for going from x menu item to plugins back to x menu item, therefore

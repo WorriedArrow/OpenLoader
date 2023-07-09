@@ -6,6 +6,7 @@ import StyleInjector from "./styleInjector";
 
 import components from "./components";
 import settings from "./settingsManager";
+import Assets from "./assets";
 
 /**
  * Defines the OpenLoader API object.
@@ -23,11 +24,12 @@ function define() {
             version: {
                 major: 0,
                 minor: 3,
-                patch: 0,
+                patch: 1,
                 get asStr() { return this.major + "." + this.minor + "." + this.patch; }
             },
             codename: "ValkyrieShadow"
-        }
+        },
+        assets: new Assets()
     };
 }
 

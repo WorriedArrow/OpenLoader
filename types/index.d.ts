@@ -119,6 +119,36 @@ interface OLBuild {
     }
     codename: string;
 }
+
+interface AssetsOptions {
+    baseUrl: string,
+    protocol: string
+}
+
+interface AssetFetchOptions {
+    url: string;
+}
+
+interface AssetUrl {
+    fullUrl: string;
+    path: string;
+}
+
+type AssetDataType = Blob | object | string;
+
+interface Asset {
+    type: string;
+    name: string;
+    fullName: string;
+    url: AssetUrl;
+    data: AssetDataType;
+}
+
+interface Assets {
+    new(options?: AssetsOptions);
+    fetchAsset(options: AssetFetchOptions): Promise<Asset>;
+    fetchAssetSync(options: AssetFetchOptions): Asset;
+}
 export default interface OpenLoader {
     client: Client;
     window: DiscordWindow,
@@ -127,5 +157,6 @@ export default interface OpenLoader {
     logger: Logger,
     components: NativeComponents;
     settings: Settings,
-    build: OLBuild
+    build: OLBuild,
+    assets: Assets;
 }
