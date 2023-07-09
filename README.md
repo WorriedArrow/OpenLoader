@@ -1,18 +1,15 @@
 <div align="center"><img width="96" height="96" src="https://user-images.githubusercontent.com/81983357/205460116-462ec6c5-3954-41d2-9782-373ec5aa4a01.png" /><h1>OpenLoader</h1></div>
 
-<div align="center">A plugin loader for Discord made possible by OpenAsar.</div><br><br>
+<div align="center">A fully-featured, lightweight, lightspeed client mod for Discord.</div><br><br>
 
 > **Warning** OpenLoader is in **alpha**, and as such, you should not fully rely on it.
 
 > **Note** Proper documentation coming soon.
 
 ## Installation
-First, ensure you have [OpenAsar](https://openasar.dev) installed.
-
 We recommend stable builds available [here](https://github.com/WorriedArrow/OpenLoader/releases/stable). These have been tested thoroughly and have been confirmed to work.<br>
 If you want to use fresh, potentially buggy builds, they are available [here](https://github.com/WorriedArrow/OpenLoader/releases/nightly).
 > **Warning** Nightly builds are **not** recommended for normal users, but they are generally fairly safe.
-
 
 To install OpenLoader, follow these steps.
 

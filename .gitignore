@@ -118,3 +118,6 @@ setup.cmd
 
 # App to package
 /index.js
+
+# Confidential dist
+/dist-encrypted/

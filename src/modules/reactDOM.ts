@@ -4,6 +4,6 @@ import define from "../utils/webpack";
 const WebpackModules = define();
 
 // @ts-expect-error
-const ReactDOMModule: typeof ReactDOM = WebpackModules.getByProps("Component", "createElement");
+const ReactDOMModule: typeof ReactDOM = WebpackModules.getByProps("render", "hydrate", "findDOMNode");
 
 export default ReactDOMModule;
