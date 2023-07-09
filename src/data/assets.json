@@ -1,0 +1,10 @@
+{
+    "baseUrl": "https://obj.openloader.dev/",
+    "about": {
+        "GLITCH_IMG": "gltch-assets/gl!tchv2.png",
+        "OL_IMG": "ol-assets/ol.png"
+    },
+    "pluginUI": {
+        "NO_BANNER_PLUGIN_IMG": "ol-assets/plug.png"
+    }
+}
